@@ -1,10 +1,33 @@
+
 # MCP Testing Project
 
-This project demonstrates a simple client-server setup using the `fastmcp` library for Model Context Protocol (MCP) communication. It includes a server that exposes tools via MCP and a client that connects to the server, lists available tools, and calls a sample tool.
+This project demonstrates a simple client-server setup using the `fastmcp` library for Model Context Protocol (MCP) communication. It includes:
+
+- A server that exposes tools and resources via MCP (see `server/server.py` and `server/mcp_blog_server.py`)
+- A client that connects to the server, lists available tools, and calls a sample tool (see `client/client.py`)
+
+## Advanced Example: Blog MCP Server
+
+The file `server/mcp_blog_server.py` demonstrates advanced MCP server features:
+
+- **Dynamic Resources**: Exposes blog posts, single post, and category-based resources with caching and templates.
+- **Complex Tools**: Tools for creating posts, publishing workflows, batch tag updates, and searching posts with parameter validation and caching.
+- **Caching**: Uses `cachetools.TTLCache` for efficient response caching.
+- **Tool Chaining**: Implements multi-step workflows (e.g., publishing a post and notifying subscribers).
+- **Asynchronous Operations**: Batch operations and async processing for scalability.
+
+To run the advanced blog server:
+
+```bash
+uv run fastmcp run server/mcp_blog_server.py
+```
+
+You can then connect with a compatible MCP client to interact with the blog tools and resources.
 
 ## Project Structure
 
-```
+
+```text
 MCP_testing/
 │
 ├── main.py
@@ -14,7 +37,8 @@ MCP_testing/
 ├── client/
 │   └── client.py
 ├── server/
-│   └── server.py
+│   ├── server.py
+│   └── mcp_blog_server.py
 └── ...
 ```
 
@@ -26,7 +50,8 @@ MCP_testing/
 
 Install dependencies:
 
-```
+
+```bash
 uv pip install fastmcp
 ```
 
@@ -34,7 +59,8 @@ uv pip install fastmcp
 
 From the project root, run:
 
-```
+
+```bash
 uv run fastmcp run server/server.py
 ```
 
@@ -46,7 +72,8 @@ The client reads the MCP server URL from `server.json` and connects to it, listi
 
 From the `client` directory, run:
 
-```
+
+```bash
 uv run client.py
 ```
 
@@ -54,7 +81,8 @@ uv run client.py
 
 The `server.json` file should look like this:
 
-```
+
+```json
 {
   "mcpServers": {
     "weather-mcp": {
@@ -67,7 +95,8 @@ The `server.json` file should look like this:
 
 ## Example Output
 
-```
+
+```text
 ✅ Connected to MCP server!
   • get_weather: Get the weather for a city
 Result: { ... }
@@ -80,4 +109,4 @@ Result: { ... }
 
 ---
 
-For more information, see the `fastmcp` documentation or the code in `client/client.py` and `server/server.py`.
+For more information, see the `fastmcp` documentation or the code in `client/client.py`, `server/server.py`, and `server/mcp_blog_server.py`.
